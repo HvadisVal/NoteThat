@@ -81,7 +81,7 @@ function loginUser(req, res) {
                 return;
             }
             // Generate JWT token
-            const token = jsonwebtoken_1.default.sign({ id: user.id, name: user.name, email: user.email }, process.env.TOKEN_SECRET, { expiresIn: "2h" });
+            const token = jsonwebtoken_1.default.sign({ id: user.id, name: user.name, email: user.email }, process.env.JWT_SECRET, { expiresIn: "2h" });
             res.status(200).json({ message: "Login successful!", token });
         }
         catch (error) {

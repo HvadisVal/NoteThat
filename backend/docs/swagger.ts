@@ -12,7 +12,7 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:5001',
+        url: 'http://localhost:5004',
       },
     ],
     components: {
@@ -33,5 +33,5 @@ const swaggerSpec = swaggerJsdoc(options);
 
 export const setupSwaggerDocs = (app: Express) => {
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-  console.log('📘 Swagger docs available at http://localhost:5001/api-docs');
+  console.log('📘 Swagger docs available at http://localhost:5004/api-docs');
 };

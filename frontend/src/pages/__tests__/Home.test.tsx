@@ -1,5 +1,4 @@
-// src/pages/__tests__/Home.test.tsx
-
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Home from '../Home';
 import userEvent from '@testing-library/user-event';

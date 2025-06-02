@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test('logs out and redirects to landing page', async ({ page }) => {
   // 1. Go to landing page and click Login
-  await page.goto('https://notethat-lw82.onrender.com');
+  await page.goto('http://localhost:3000');
   await page.click('text=Login');
 
   // 2. Fill in login credentials
@@ -22,6 +22,6 @@ test('logs out and redirects to landing page', async ({ page }) => {
   await page.click('button >> i.fas.fa-user');
 
   // 6. Verify redirect back to landing page
-  await expect(page).toHaveURL('https://notethat-lw82.onrender.com');
+  await expect(page).toHaveURL('http://localhost:3000');
   await expect(page.locator('text=Welcome to NoteThat')).toBeVisible();
 });

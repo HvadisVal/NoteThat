@@ -1,5 +1,7 @@
+import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import NoteCard from './NoteCard';
+
 
 describe('NoteCard Component', () => {
   it('renders note title, content and category', async () => {

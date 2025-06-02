@@ -14,8 +14,10 @@ export const loginUser = async (email: string, password: string) => {
 
 export const fetchNotes = async (token: string) => {
   const res = await fetch(`${API_BASE}/notes`, {
-    headers: { 'auth-token': token }
-  });
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }  });
   return res.json();
 };
 
@@ -24,7 +26,7 @@ export const createNote = async (note: any, token: string) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'auth-token': token
+      'Authorization': `Bearer ${token}`
     },
     body: JSON.stringify(note)
   });
@@ -36,7 +38,7 @@ export const updateNote = async (id: string, note: any, token: string) => {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      'auth-token': token
+      'Authorization': `Bearer ${token}`
     },
     body: JSON.stringify(note)
   });
@@ -46,13 +48,15 @@ export const updateNote = async (id: string, note: any, token: string) => {
 export const deleteNote = async (id: string, token: string) => {
   const res = await fetch(`${API_BASE}/notes/${id}`, {
     method: 'DELETE',
-    headers: { 'auth-token': token }
-  });
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }  });
   return res.json();
 };
 
 export const fetchTasks = async () => {
-  const res = await fetch('http://localhost:5001/api/tasks');
+  const res = await fetch('http://localhost:5004/api/tasks');
   return res.json();
 };
 

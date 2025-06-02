@@ -17,19 +17,23 @@ const taskRoutes_1 = __importDefault(require("./routes/taskRoutes"));
 dotenv_1.default.config();
 // Initialize Express app
 const app = (0, express_1.default)();
-// ✅ Middleware
+//  Middleware
 app.use((0, cors_1.default)());
 app.use(express_1.default.json()); // enables req.body parsing
-// ✅ Routes
+//  Root route for Render and health check
+app.get('/', (req, res) => {
+    res.send('API is running ');
+});
+//  Routes
 app.use('/api/auth', auth_routes_1.default);
 app.use('/api/notes', note_routes_1.default);
 app.use('/api/tasks', taskRoutes_1.default);
-// ✅ Connect to MongoDB
+//  Connect to MongoDB
 (0, database_1.connect)();
-// ✅ Swagger Docs
+//  Swagger Docs
 (0, swagger_1.setupSwaggerDocs)(app);
-// ✅ Start server
-const PORT = process.env.PORT || 5001;
+//  Start server
+const PORT = process.env.PORT || 5004;
 app.listen(PORT, () => {
-    console.log(`✅ Server running on http://localhost:${PORT}`);
+    console.log(` Server running on http://localhost:${PORT}`);
 });

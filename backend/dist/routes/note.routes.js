@@ -5,16 +5,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const noteController_1 = require("../controllers/noteController");
-const authController_1 = require("../controllers/authController");
 const authMiddleware_1 = __importDefault(require("../middleware/authMiddleware"));
+const authController_1 = require("../controllers/authController");
 const router = express_1.default.Router();
-router.use(authMiddleware_1.default);
 /**
  * @swagger
  * tags:
  *   name: Notes
  *   description: Notes management
  */
+// Apply auth middleware first
+router.use(authMiddleware_1.default);
+router.use(authController_1.securityToken);
 /**
  * @swagger
  * /api/notes:
@@ -47,7 +49,10 @@ router.use(authMiddleware_1.default);
  *                     type: array
  *                     items:
  *                       type: string
+ *                   pinned:
+ *                     type: boolean
  */
+router.get('/', noteController_1.getNotes);
 /**
  * @swagger
  * /api/notes:
@@ -84,6 +89,7 @@ router.use(authMiddleware_1.default);
  *       201:
  *         description: Note created successfully
  */
+router.post('/', noteController_1.createNote);
 /**
  * @swagger
  * /api/notes/{id}:
@@ -110,10 +116,23 @@ router.use(authMiddleware_1.default);
  *                 type: string
  *               content:
  *                 type: string
+ *               category:
+ *                 type: string
+ *               color:
+ *                 type: string
+ *               tags:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               pinned:
+ *                 type: boolean
  *     responses:
  *       200:
  *         description: Note updated successfully
+ *       404:
+ *         description: Note not found
  */
+router.put('/:id', noteController_1.updateNote);
 /**
  * @swagger
  * /api/notes/{id}:
@@ -132,10 +151,8 @@ router.use(authMiddleware_1.default);
  *     responses:
  *       200:
  *         description: Note deleted successfully
+ *       404:
+ *         description: Note not found
  */
-router.use(authController_1.securityToken); // all routes below require auth
-router.get('/', noteController_1.getNotes);
-router.post('/', noteController_1.createNote);
-router.put('/:id', noteController_1.updateNote);
 router.delete('/:id', noteController_1.deleteNote);
 exports.default = router;
