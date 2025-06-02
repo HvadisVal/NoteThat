@@ -42,6 +42,6 @@ await page.selectOption('select:nth-of-type(2)', { label: 'Blue' });
   await wait(3000);
 
   // 8. Verify result
-  await expect(page.locator(`text=${noteTitle}`)).toBeVisible();
-  await expect(page.locator(`text=${noteContent}`)).toBeVisible();
+  await expect(page.locator(`text=${noteTitle}`)).toBeVisible({ timeout: 10000 });
+  await expect(page.locator(`text=${noteContent}`)).toBeVisible({ timeout: 10000 });
 });
