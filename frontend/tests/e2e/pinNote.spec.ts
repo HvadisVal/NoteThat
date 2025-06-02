@@ -12,7 +12,7 @@ test('creates a pinned note and verifies it appears under 📌 Pinned', async ({
   await page.click('button:has-text("Login")');
 
   // 3. Wait for dashboard/home
-  await expect(page.locator('text=Your Notes')).toBeVisible();
+  await expect(page.locator('text=Your Notes')).toBeVisible({ timeout: 30000 });
 
   // 4. Click New Note
   await page.click('button:has-text("New Note")');

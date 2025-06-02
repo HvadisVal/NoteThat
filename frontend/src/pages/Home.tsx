@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchNotes, createNote, updateNote } from '../services/api';
+import { fetchNotes, createNote, updateNote, deleteNote } from '../services/api';
 import TaskBoard from '../components/TaskBoard';
 
 const Home: React.FC = () => {
@@ -155,6 +155,19 @@ const Home: React.FC = () => {
                       >
                         📌 Unpin
                       </button>
+                      <button
+      className="text-red-400 hover:text-red-200 transition"
+      onClick={async () => {
+        // eslint-disable-next-line no-restricted-globals
+        if (confirm(`Are you sure you want to delete "${note.title}"?`)) {
+          await deleteNote(note._id, token!);
+          setNotes(prev => prev.filter(n => n._id !== note._id));
+        }
+      }}
+    >
+      🗑️ Delete
+    </button>
+
                       
                     </div>
                   </div>
@@ -192,6 +205,18 @@ const Home: React.FC = () => {
                     >
                       📍 Pin
                     </button>
+                    <button
+      className="text-red-400 hover:text-red-200 transition"
+      onClick={async () => {
+        // eslint-disable-next-line no-restricted-globals
+        if (confirm(`Are you sure you want to delete "${note.title}"?`)) {
+          await deleteNote(note._id, token!);
+          setNotes(prev => prev.filter(n => n._id !== note._id));
+        }
+      }}
+    >
+      🗑️ Delete
+    </button>
                   </div>
                 </div>
               ))}
