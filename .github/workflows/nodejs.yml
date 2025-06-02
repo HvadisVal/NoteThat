@@ -25,15 +25,16 @@ jobs:
         node-version: [18]
 
     steps:
-      - name: ⬇ Checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: ⚙️ Setup Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: ♻️ Cache frontend node_modules
+      # Cache Node modules
+      - name: Cache frontend dependencies
         uses: actions/cache@v3
         with:
           path: frontend/node_modules
@@ -41,15 +42,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-frontend-
 
-      - name: Install frontend dependencies
-        working-directory: ./frontend
-        run: npm ci
-
-      - name: Run frontend tests
-        working-directory: ./frontend
-        run: CI=true npm test
-
-      - name: ♻️ Cache backend node_modules
+      - name: Cache backend dependencies
         uses: actions/cache@v3
         with:
           path: backend/node_modules
@@ -57,37 +50,55 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-backend-
 
+       # Install and test frontend
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: npm ci
+
+      - name: Run frontend unit tests
+        working-directory: ./frontend
+        run: CI=true npm test
+
+
+      # Install and test backend
       - name: Install backend dependencies
         working-directory: ./backend
         run: npm ci
 
-      - name: 🧪 Seed test user    
+      - name: Seed test user
         working-directory: ./backend
         run: npx ts-node scripts/seedTestUser.ts
-        env:
-          MONGO_URI: ${{ secrets.MONGO_URI_TEST }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
       - name: Run backend tests
         working-directory: ./backend
         run: CI=true npm test
-        env: 
-          NODE_ENV: ci
-          MONGO_URI: ${{ secrets.MONGO_URI_TEST }}
 
-      
-      - name: 🧩 Install Playwright browsers
+      - name: Cache backend node_modules
+        uses: actions/cache@v3
+        with:
+          path: backend/node_modules
+          key: ${{ runner.os }}-backend-${{ hashFiles('backend/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-backend-
+
+     # Cache Playwright browsers
+      - name: Cache Playwright browsers
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-browsers
+
+      - name: Install Playwright (Chromium only)
         working-directory: ./frontend
-        run: npx playwright install --with-deps
-        
+        run: npx playwright install chromium
+   
 
       - name: Run E2E tests
         working-directory: ./frontend
         run: |
-          npx wait-on https://notethat-s6gx.onrender.com
-           sleep 30
-           npm run e2e:test
-
+          npx wait-on https://notethat-s6gx.onrender.com --timeout 60000
+          npx playwright test --workers=2
+  
       - name: Build frontend
         working-directory: ./frontend
         run: npm run build
