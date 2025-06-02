@@ -1,0 +1,54 @@
+1. Log in to get the JWT
+POST http://localhost:5001/api/auth/login
+
+    {
+  "email": "valion@example.com",
+  "password": "notethat123"
+    }
+
+
+2. Create a new note
+POST http://localhost:5001/api/notes
+
+auth-token: <your_token_here>
+Content-Type: application/json
+
+{
+  "title": "Note from Postman",
+  "content": "This was created using Postman.",
+  "category": "Development",
+  "color": "bg-blue-400",
+  "tags": ["postman", "api"],
+  "pinned": false,
+  "collaborators": []
+}
+
+
+3. Get all notes for logged-in user
+GET http://localhost:5001/api/notes
+
+auth-token: <your_token_here>
+
+
+4. Update a note
+PUT http://localhost:5001/api/notes/<noteId>
+
+auth-token: <your_token_here>
+
+{
+  "title": "Updated title from Postman"
+}
+
+
+5. Delete a note
+DELETE http://localhost:5001/api/notes/<noteId>
+
+auth-token: <your_token_here>
+
+
+
+
+# Ignore notes file
+backend/secret-notes.txt
+or
+/secret-notes.txt

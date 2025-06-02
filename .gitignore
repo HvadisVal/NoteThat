@@ -1,0 +1,14 @@
+# Ignore node_modules everywhere
+**/node_modules
+
+# Environment variables
+**/.env
+**/.env.test
+**/.env.test.ci
+
+# IDE/editor stuff
+.vscode
+.DS_Store
+*.log
+
+backend/secret-notes.txt
