@@ -96,9 +96,8 @@ jobs:
       - name: Run E2E tests
         working-directory: ./frontend
         run: |
-          npx wait-on https://notethat-s6gx.onrender.com
-           sleep 30
-           npm run e2e:test
+          npx wait-on https://notethat-s6gx.onrender.com --timeout 90000
+          npx playwright test --workers=2
   
       - name: Build frontend
         working-directory: ./frontend
