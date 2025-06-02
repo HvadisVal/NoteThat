@@ -5,7 +5,7 @@ export default defineConfig({
   workers: 1,
   timeout: 30 * 1000,
   use: {
-    baseURL: 'https://notethat-lw82.onrender.com/',
+    baseURL: 'https://notethat-s6gx.onrender.com/',
     headless: process.env.CI ? true : false,
     viewport: { width: 1280, height: 720 },
     actionTimeout: 0,
