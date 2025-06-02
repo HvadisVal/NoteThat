@@ -7,7 +7,7 @@ const noteContent = `E2E Note Content ${Date.now()}`;
 const wait = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 test('user can log in and create a note', async ({ page }) => {
- await page.goto('http://localhost:3000');
+ await page.goto('https://notethat-s6gx.onrender.com');
   // 1. Click login button from landing
   await page.click('text=Login');
 

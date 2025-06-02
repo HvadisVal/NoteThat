@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test('shows error on failed login', async ({ page }) => {
   // 1. Go to landing page
-  await page.goto('http://localhost:3000');
+  await page.goto('https://notethat-s6gx.onrender.com');
 
   // 2. Click Login button
   await page.click('text=Login');

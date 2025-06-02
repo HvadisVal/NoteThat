@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test('creates a pinned note and verifies it appears under 📌 Pinned', async ({ page }) => {
   // 1. Visit frontend
-  await page.goto('http://localhost:3000');
+  await page.goto('https://notethat-s6gx.onrender.com');
 
   await page.click('text=Login');
 
